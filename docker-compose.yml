@@ -1,0 +1,16 @@
+services:
+  dymo-web:
+    build: .
+    container_name: dymo-web
+    privileged: true
+    # network_mode: host is required on Linux for Bluetooth (BLE) access.
+    # On macOS Docker Desktop it breaks port forwarding, so use bridge + ports instead.
+    ports:
+      - "8235:8235"
+    volumes:
+      - /var/run/dbus:/var/run/dbus
+      - saves_data:/app/app/saves
+    restart: unless-stopped
+
+volumes:
+  saves_data:
